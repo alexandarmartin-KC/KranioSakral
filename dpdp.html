@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin – dpkranio.dk</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&family=Roboto:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Open Sans', sans-serif; background: #f4f6f9; color: #333; min-height: 100vh; }
+
+        /* ── Login ── */
+        .login-wrap { display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+        .login-box { background: #fff; padding: 2.5rem; border-radius: 12px; box-shadow: 0 4px 24px rgba(0,0,0,.08); width: 100%; max-width: 380px; }
+        .login-box h1 { font-family: Roboto, sans-serif; font-size: 1.4rem; margin-bottom: 1.5rem; text-align: center; }
+        .login-box label { display: block; font-size: .85rem; font-weight: 500; margin-bottom: .3rem; }
+        .login-box input { width: 100%; padding: .6rem .8rem; border: 1px solid #ccc; border-radius: 6px; font-size: .95rem; margin-bottom: 1rem; }
+        .login-box button { width: 100%; padding: .7rem; background: #1b7a78; color: #fff; border: none; border-radius: 6px; font-size: 1rem; cursor: pointer; }
+        .login-box button:hover { background: #145c5b; }
+        .login-error { color: #c0392b; font-size: .85rem; margin-bottom: .8rem; display: none; }
+
+        /* ── Admin ── */
+        .admin-wrap { display: none; }
+        .admin-header { background: #1b7a78; color: #fff; padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: space-between; }
+        .admin-header h1 { font-family: Roboto, sans-serif; font-size: 1.2rem; }
+        .admin-header button { background: rgba(255,255,255,.15); color: #fff; border: 1px solid rgba(255,255,255,.3); padding: .4rem 1rem; border-radius: 6px; cursor: pointer; font-size: .85rem; }
+        .admin-header button:hover { background: rgba(255,255,255,.25); }
+
+        .admin-body { max-width: 800px; margin: 2rem auto; padding: 0 1.5rem; }
+
+        .page-selector { margin-bottom: 1.5rem; }
+        .page-selector label { font-weight: 500; margin-right: .5rem; }
+        .page-selector select { padding: .5rem .8rem; border: 1px solid #ccc; border-radius: 6px; font-size: .95rem; min-width: 220px; }
+
+        .editor-section { background: #fff; border-radius: 10px; box-shadow: 0 2px 12px rgba(0,0,0,.06); padding: 1.5rem; margin-bottom: 1.5rem; }
+        .editor-section h2 { font-family: Roboto, sans-serif; font-size: 1.1rem; margin-bottom: 1rem; color: #1b7a78; }
+        .field-group { margin-bottom: 1.2rem; }
+        .field-group label { display: block; font-size: .85rem; font-weight: 500; margin-bottom: .3rem; color: #555; }
+        .field-group input,
+        .field-group textarea { width: 100%; padding: .6rem .8rem; border: 1px solid #ddd; border-radius: 6px; font-size: .95rem; font-family: 'Open Sans', sans-serif; }
+        .field-group textarea { min-height: 120px; resize: vertical; line-height: 1.6; }
+        .field-group .hint { font-size: .75rem; color: #999; margin-top: .2rem; }
+
+        .save-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; }
+        .save-bar button { padding: .7rem 2rem; background: #1b7a78; color: #fff; border: none; border-radius: 6px; font-size: 1rem; cursor: pointer; }
+        .save-bar button:hover { background: #145c5b; }
+        .save-bar button:disabled { background: #999; cursor: not-allowed; }
+        .save-msg { font-size: .9rem; }
+        .save-msg.ok { color: #27ae60; }
+        .save-msg.err { color: #c0392b; }
+
+        .loading { text-align: center; padding: 3rem; color: #999; }
+    </style>
+</head>
+<body>
+
+<!-- ═══ Login ═══ -->
+<div class="login-wrap" id="loginView">
+    <div class="login-box">
+        <h1>Admin – dpkranio.dk</h1>
+        <div class="login-error" id="loginError"></div>
+        <form id="loginForm">
+            <label for="username">Brugernavn</label>
+            <input id="username" name="username" type="text" autocomplete="username" required>
+            <label for="password">Adgangskode</label>
+            <input id="password" name="password" type="password" autocomplete="current-password" required>
+            <button type="submit">Log ind</button>
+        </form>
+    </div>
+</div>
+
+<!-- ═══ Admin panel ═══ -->
+<div class="admin-wrap" id="adminView">
+    <div class="admin-header">
+        <h1>Indholdsredigering</h1>
+        <button id="logoutBtn">Log ud</button>
+    </div>
+    <div class="admin-body">
+        <div class="page-selector">
+            <label for="pageSelect">Vælg side:</label>
+            <select id="pageSelect"><option value="">– Vælg –</option></select>
+        </div>
+
+        <div id="editorArea"></div>
+
+        <div class="save-bar" id="saveBar" style="display:none">
+            <button id="saveBtn">Gem ændringer</button>
+            <span class="save-msg" id="saveMsg"></span>
+        </div>
+    </div>
+</div>
+
+<script>
+(function () {
+    'use strict';
+
+    const API = '/api';
+    let sectionDefs = {};
+
+    /* ── Helpers ── */
+    async function api(path, opts = {}) {
+        const res = await fetch(API + path, {
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'same-origin',
+            ...opts,
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Fejl');
+        return data;
+    }
+
+    function escapeHtml(str) {
+        const d = document.createElement('div');
+        d.textContent = str;
+        return d.innerHTML;
+    }
+
+    /* ── Auth ── */
+    async function checkAuth() {
+        try {
+            const data = await api('/auth.php');
+            if (data.loggedIn) showAdmin();
+            else showLogin();
+        } catch {
+            showLogin();
+        }
+    }
+
+    function showLogin() {
+        document.getElementById('loginView').style.display = 'flex';
+        document.getElementById('adminView').style.display = 'none';
+    }
+
+    function showAdmin() {
+        document.getElementById('loginView').style.display = 'none';
+        document.getElementById('adminView').style.display = 'block';
+        loadSections();
+    }
+
+    document.getElementById('loginForm').addEventListener('submit', async function (e) {
+        e.preventDefault();
+        const errEl = document.getElementById('loginError');
+        errEl.style.display = 'none';
+
+        const username = document.getElementById('username').value.trim();
+        const password = document.getElementById('password').value;
+
+        try {
+            await api('/auth.php', {
+                method: 'POST',
+                body: JSON.stringify({ username, password }),
+            });
+            showAdmin();
+        } catch (err) {
+            errEl.textContent = err.message;
+            errEl.style.display = 'block';
+        }
+    });
+
+    document.getElementById('logoutBtn').addEventListener('click', async function () {
+        await api('/auth.php', {
+            method: 'POST',
+            body: JSON.stringify({ action: 'logout' }),
+        });
+        showLogin();
+    });
+
+    /* ── Sections ── */
+    async function loadSections() {
+        try {
+            sectionDefs = await api('/sections.php');
+        } catch {
+            document.getElementById('editorArea').innerHTML = '<p class="loading">Kunne ikke hente sektioner.</p>';
+            return;
+        }
+
+        const select = document.getElementById('pageSelect');
+        select.innerHTML = '<option value="">– Vælg side –</option>';
+        for (const [key, page] of Object.entries(sectionDefs)) {
+            const opt = document.createElement('option');
+            opt.value = key;
+            opt.textContent = page.label;
+            select.appendChild(opt);
+        }
+    }
+
+    document.getElementById('pageSelect').addEventListener('change', function () {
+        const page = this.value;
+        if (!page) {
+            document.getElementById('editorArea').innerHTML = '';
+            document.getElementById('saveBar').style.display = 'none';
+            return;
+        }
+        loadPageContent(page);
+    });
+
+    /* ── Load content for page ── */
+    async function loadPageContent(page) {
+        const area = document.getElementById('editorArea');
+        area.innerHTML = '<p class="loading">Indlæser …</p>';
+        document.getElementById('saveBar').style.display = 'none';
+        document.getElementById('saveMsg').textContent = '';
+
+        let dbContent = {};
+        try {
+            dbContent = await api('/content.php?page=' + encodeURIComponent(page));
+        } catch { /* tom – brug blanke felter */ }
+
+        const def = sectionDefs[page];
+        if (!def) return;
+
+        let html = '<div class="editor-section"><h2>' + escapeHtml(def.label) + '</h2>';
+
+        for (const sec of def.sections) {
+            const val = dbContent[sec.key] || '';
+            html += '<div class="field-group">';
+            html += '<label for="field-' + sec.key + '">' + escapeHtml(sec.label) + '</label>';
+
+            if (sec.type === 'textarea') {
+                html += '<textarea id="field-' + sec.key + '" data-key="' + sec.key + '">' + escapeHtml(val) + '</textarea>';
+                html += '<div class="hint">Tom linje = nyt afsnit</div>';
+            } else {
+                html += '<input id="field-' + sec.key + '" data-key="' + sec.key + '" type="text" value="' + escapeHtml(val) + '">';
+            }
+
+            html += '</div>';
+        }
+
+        html += '</div>';
+        area.innerHTML = html;
+        document.getElementById('saveBar').style.display = 'flex';
+    }
+
+    /* ── Save ── */
+    document.getElementById('saveBtn').addEventListener('click', async function () {
+        const page = document.getElementById('pageSelect').value;
+        if (!page) return;
+
+        const fields = document.querySelectorAll('#editorArea [data-key]');
+        const sections = {};
+        fields.forEach(function (el) {
+            sections[el.dataset.key] = el.value;
+        });
+
+        const btn = this;
+        const msg = document.getElementById('saveMsg');
+        btn.disabled = true;
+        msg.textContent = 'Gemmer …';
+        msg.className = 'save-msg';
+
+        try {
+            await api('/content.php', {
+                method: 'POST',
+                body: JSON.stringify({ page, sections }),
+            });
+            msg.textContent = 'Gemt!';
+            msg.className = 'save-msg ok';
+        } catch (err) {
+            msg.textContent = 'Fejl: ' + err.message;
+            msg.className = 'save-msg err';
+        }
+
+        btn.disabled = false;
+    });
+
+    /* ── Init ── */
+    checkAuth();
+})();
+</script>
+</body>
+</html>

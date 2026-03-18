@@ -90,18 +90,24 @@
     setContact(content);
   }
 
-  async function loadDefaults() {
-    const response = await fetch(defaultPath, { cache: 'no-store' });
-    if (!response.ok) {
-      throw new Error('Kunne ikke hente standardindhold.');
-    }
+  async function loadContent() {
+    // Prøv API først, fald tilbage til statisk JSON
+    try {
+      const apiRes = await fetch('/api/content.php?page=priser-booking', { cache: 'no-store' });
+      if (apiRes.ok) {
+        const data = await apiRes.json();
+        if (data && Object.keys(data).length > 0) return data;
+      }
+    } catch { /* fald igennem */ }
 
+    const response = await fetch(defaultPath, { cache: 'no-store' });
+    if (!response.ok) throw new Error('Kunne ikke hente indhold.');
     return response.json();
   }
 
   async function init() {
     try {
-      const content = await loadDefaults();
+      const content = await loadContent();
       applyContent(content);
     } catch {
       // Keep existing HTML fallback text.

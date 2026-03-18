@@ -1,24 +1,28 @@
 # KranioSakral
 
 Statisk hjemmeside til Kranio Sakral Terapi v/Dorthe Pia.  
-Hostet via **GitHub Pages** på **dpkranio.dk**.
+Hostet på **Nordicway webhotel** med eget domæne **dpkranio.dk**.
 
 ## Sådan virker det
 
-Siden er 100 % statisk HTML/CSS/JS — ingen server, ingen database.  
-GitHub Pages serverer filerne direkte fra dette repo.  
-Når du pusher til `main`, opdateres hjemmesiden automatisk.
+HTML/CSS/JS-filer ligger i `/public_html/` på Nordicway.  
+Admin-panelet (`/dpdp`) bruger PHP + MySQL til at gemme redigérbart indhold.  
+GitHub bruges til versionsstyring.
 
-## Redigér indhold
+## Admin-panel
 
-### Tekst på Priser & Booking
+Gå til `dpkranio.dk/dpdp` → log ind → vælg side → redigér tekst → gem.
 
-Redigér filen `assets/content/priser-booking.default.json` og push til `main`.  
-Ændringer er live inden for et par minutter.
+Indhold gemmes i MySQL-databasen og indlæses automatisk på de offentlige sider.
 
-### Øvrige sider
+## Opsætning (første gang)
 
-Redigér den relevante `.html`-fil direkte.
+1. Opret en MySQL-database i cPanel
+2. Kopiér `api/config.example.php` til `api/config.php`
+3. Udfyld DB_HOST, DB_NAME, DB_USER, DB_PASS
+4. Åbn `dpkranio.dk/api/setup.php` i browseren
+5. Log ind på `dpkranio.dk/dpdp` med **admin** / **dpdp2026**
+6. Skift adgangskode
 
 ## Struktur
 
@@ -28,35 +32,18 @@ Redigér den relevante `.html`-fil direkte.
 - `om-mig.html` — Om mig
 - `privatlivspolitik.html` — Privatlivspolitik
 - `cookiepolitik.html` — Cookiepolitik
-- `assets/content/priser-booking.default.json` — Redigérbart indhold
-- `assets/css/` — Stylesheets
-- `assets/js/` — Scripts
+- `dpdp.html` — Admin-panel
+- `api/` — PHP backend (auth, content, setup)
+- `assets/` — CSS, JS, indhold
 - `billeder/` — Billeder
 - `bootstrap/` — Bootstrap-tema
+- `.htaccess` — Clean URLs + HTTPS
 
 ## Lokal test
 
 ```bash
-python3 -m http.server 8080
+php -S localhost:8080
 ```
 
-Åbn `http://localhost:8080` i browseren.
-
-## DNS-opsætning (dpkranio.dk)
-
-Hos din domæne-udbyder skal du oprette:
-
-| Type  | Navn | Værdi |
-|-------|------|-------|
-| CNAME | www  | `alexandarmartin-kc.github.io` |
-| A     | @    | `185.199.108.153` |
-| A     | @    | `185.199.109.153` |
-| A     | @    | `185.199.110.153` |
-| A     | @    | `185.199.111.153` |
-
-GitHub Pages håndterer HTTPS automatisk.
-
-## Vigtigt at tilpasse
-
-- Tilføj Facebook/Instagram-URL i footerlinks.
-- Indsæt korrekt Google Analytics målings-ID i `assets/js/main.js`.
+Åbn `http://localhost:8080` i browseren.  
+(API kræver MySQL – brug MAMP/XAMPP lokalt.)
