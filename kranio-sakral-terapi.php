@@ -49,7 +49,7 @@ $_s = dpSEO(
     </div>
 
     <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top p-0 wow fadeIn" data-wow-delay="0.1s">
-        <a href="/" class="navbar-brand d-flex align-items-center px-4 px-lg-5"><h1 class="m-0 text-primary">Kranio Sakral Terapi v/Dorthe Pia</h1></a>
+        <a href="/" class="navbar-brand d-flex align-items-center px-4 px-lg-5"><h1 class="m-0 text-primary">DPkranio v/Dorthe Pia</h1></a>
         <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
