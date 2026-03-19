@@ -271,6 +271,77 @@
         counter.className = 'char-counter' + (len > max ? ' over' : len > max * 0.9 ? ' warn' : '');
     }
 
+    async function loadFallbackContent(page) {
+        const fallback = {};
+
+        if (page === 'priser-booking') {
+            try {
+                const res = await fetch('/assets/content/priser-booking.default.json', { credentials: 'same-origin' });
+                if (res.ok) {
+                    const json = await res.json();
+                    if (json && typeof json === 'object') {
+                        Object.assign(fallback, json);
+                    }
+                }
+            } catch {
+                /* ignorér fallback-fejl */
+            }
+        }
+
+        try {
+            const candidates = ['/' + page + '.php', '/' + page + '.html'];
+            let html = '';
+
+            for (const url of candidates) {
+                try {
+                    const res = await fetch(url, { credentials: 'same-origin' });
+                    if (!res.ok) continue;
+                    html = await res.text();
+                    if (html) break;
+                } catch {
+                    /* prøv næste kandidat */
+                }
+            }
+
+            if (!html) return fallback;
+
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+
+            const titleEl = doc.querySelector('title');
+            if (titleEl && titleEl.textContent.trim()) {
+                fallback.seo_title = titleEl.textContent.trim();
+            }
+
+            const descEl = doc.querySelector('meta[name="description"]');
+            if (descEl) {
+                const desc = descEl.getAttribute('content') || '';
+                if (desc.trim()) fallback.seo_description = desc.trim();
+            }
+
+            const ogImgEl = doc.querySelector('meta[property="og:image"]');
+            if (ogImgEl) {
+                const og = ogImgEl.getAttribute('content') || '';
+                if (og.startsWith('https://dpkranio.dk/')) {
+                    fallback.og_image = og.replace('https://dpkranio.dk', '');
+                } else if (og.startsWith('/')) {
+                    fallback.og_image = og;
+                }
+            }
+
+            doc.querySelectorAll('[data-content]').forEach(function (el) {
+                const key = el.getAttribute('data-content');
+                if (!key) return;
+                const value = (el.textContent || '').trim();
+                if (value !== '') fallback[key] = value;
+            });
+        } catch {
+            /* ignorér fallback-fejl */
+        }
+
+        return fallback;
+    }
+
     /* ── Load content for page ── */
     async function loadPageContent(page) {
         const area = document.getElementById('editorArea');
@@ -283,13 +354,20 @@
             dbContent = await api('/content.php?page=' + encodeURIComponent(page));
         } catch { /* tom – brug blanke felter */ }
 
+        let fallbackContent = {};
+        if (!dbContent || Object.keys(dbContent).length === 0) {
+            fallbackContent = await loadFallbackContent(page);
+        }
+
+        const pageContent = Object.assign({}, fallbackContent, dbContent || {});
+
         const def = sectionDefs[page];
         if (!def) return;
 
         // ── Indholdssektion ──
         let html = '<div class="editor-section"><h2>' + escapeHtml(def.label) + '</h2>';
         for (const sec of def.sections) {
-            html += buildField(sec, dbContent[sec.key] || '');
+            html += buildField(sec, pageContent[sec.key] || '');
         }
         html += '</div>';
 
@@ -298,7 +376,7 @@
             html += '<div class="editor-section seo-section"><h2>SEO &amp; Deling</h2>';
             html += '<p class="seo-intro">Styrer sidens titel og beskrivelse i Google-søgeresultater, samt billede og tekst ved deling på Facebook og Instagram.</p>';
             for (const sec of def.seo) {
-                html += buildField(sec, dbContent[sec.key] || '', page);
+                html += buildField(sec, pageContent[sec.key] || '', page);
             }
             html += '</div>';
         }
