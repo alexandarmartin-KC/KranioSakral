@@ -185,7 +185,7 @@ $_s = dpSEO(
     </div>
     <div class="container-fluid bg-dark text-light border-top border-secondary" style="padding: 6px 0;">
         <div class="container text-center">
-            <small>&copy; <?= date('Y') ?> Kranio Sakral Terapi v/Dorthe Pia · CVR: 37448710 · All rights reserved.</small>
+            <small>&copy; <?= date('Y') ?> DPkranio v/Dorthe Pia · CVR: 37448710 · All rights reserved.</small>
         </div>
     </div>
 
