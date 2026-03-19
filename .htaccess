@@ -1,14 +1,19 @@
 RewriteEngine On
 
 # PHP-first site
-DirectoryIndex index.php
+DirectoryIndex forside.php
 
 # Force HTTPS
 RewriteCond %{HTTPS} off
 RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
+# Redirect legacy homepage URLs
+RewriteRule ^index\.php$ /forside.php [L,R=301,NC]
+RewriteRule ^index/?$ /forside.php [L,R=301,NC]
+RewriteRule ^index\.html$ /forside.php [L,R=301,NC]
+
 # Redirect legacy HTML URLs to PHP equivalents
-RewriteRule ^(index|kranio-sakral-terapi|priser-booking|om-mig|privatlivspolitik|cookiepolitik)\.html$ /$1.php [L,R=301,NC]
+RewriteRule ^(kranio-sakral-terapi|priser-booking|om-mig|privatlivspolitik|cookiepolitik)\.html$ /$1.php [L,R=301,NC]
 
 # Clean URLs: /om-mig -> serve matching .php file
 RewriteCond %{REQUEST_FILENAME} !-f

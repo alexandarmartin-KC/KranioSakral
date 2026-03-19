@@ -65,7 +65,7 @@ $_s = dpSEO(
     </div>
 
     <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top p-0 wow fadeIn" data-wow-delay="0.1s">
-        <a href="index.php" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+        <a href="forside.php" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
             <h1 class="m-0 text-primary">Kranio Sakral Terapi v/Dorthe Pia</h1>
         </a>
         <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -73,7 +73,7 @@ $_s = dpSEO(
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="index.php" class="nav-item nav-link active">Forside</a>
+                <a href="forside.php" class="nav-item nav-link active">Forside</a>
                 <a href="kranio-sakral-terapi.php" class="nav-item nav-link">Kranio Sakral Terapi</a>
                 <a href="priser-booking.php" class="nav-item nav-link">Priser & Booking</a>
                 <a href="om-mig.php" class="nav-item nav-link">Om mig</a>
@@ -218,7 +218,7 @@ $_s = dpSEO(
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <h5 class="text-light mb-4">Sider</h5>
-                    <a class="btn btn-link" href="index.php">Forside</a>
+                    <a class="btn btn-link" href="forside.php">Forside</a>
                     <a class="btn btn-link" href="kranio-sakral-terapi.php">Kranio Sakral Terapi</a>
                     <a class="btn btn-link" href="priser-booking.php">Priser & Booking</a>
                     <a class="btn btn-link" href="om-mig.php">Om mig</a>

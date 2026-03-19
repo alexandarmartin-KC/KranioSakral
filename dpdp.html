@@ -331,7 +331,8 @@
         }
 
         try {
-            const candidates = ['/' + page + '.php'];
+            const pagePath = page === 'index' ? 'forside' : page;
+            const candidates = ['/' + pagePath + '.php'];
             let html = '';
 
             for (const url of candidates) {
