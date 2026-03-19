@@ -214,7 +214,7 @@ $_s = dpSEO(
                 <div class="col-lg-3 col-md-6">
                     <h5 class="text-light mb-4">Klinik</h5>
                     <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>Ole Nielsens Vej 7, Gundsømagle, 4000 Roskilde</p>
-                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i><a href="tel:+4522901025">22 90 10 25</a></p><p class="mb-2">CVR: 37448710</p>
+                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i><a href="tel:+4522901025">22 90 10 25</a></p>
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <h5 class="text-light mb-4">Sider</h5>
@@ -240,6 +240,11 @@ $_s = dpSEO(
                     </a>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="container-fluid bg-dark text-light border-top border-secondary" style="padding: 6px 0;">
+        <div class="container text-center">
+            <small>&copy; 2026 Kranio Sakral Terapi v/Dorthe Pia · CVR: 37448710 · All rights reserved.</small>
         </div>
     </div>
 
