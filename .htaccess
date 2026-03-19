@@ -1,18 +1,16 @@
 RewriteEngine On
 
-# Keep existing layout stable: serve HTML first
-DirectoryIndex index.html index.php
+# PHP-first site
+DirectoryIndex index.php
 
 # Force HTTPS
 RewriteCond %{HTTPS} off
 RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
-# Clean URLs: /om-mig -> try .html first, then .php
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME}.html -f
-RewriteRule ^(.+)$ $1.html [L]
+# Redirect legacy HTML URLs to PHP equivalents
+RewriteRule ^(index|kranio-sakral-terapi|priser-booking|om-mig|privatlivspolitik|cookiepolitik)\.html$ /$1.php [L,R=301,NC]
 
+# Clean URLs: /om-mig -> serve matching .php file
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}.php -f

@@ -49,16 +49,16 @@ $_s = dpSEO(
     </div>
 
     <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top p-0 wow fadeIn" data-wow-delay="0.1s">
-        <a href="index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5"><h1 class="m-0 text-primary">Kranio Sakral Terapi v/Dorthe Pia</h1></a>
+        <a href="index.php" class="navbar-brand d-flex align-items-center px-4 px-lg-5"><h1 class="m-0 text-primary">Kranio Sakral Terapi v/Dorthe Pia</h1></a>
         <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="index.html" class="nav-item nav-link">Forside</a>
-                <a href="kranio-sakral-terapi.html" class="nav-item nav-link active">Kranio Sakral Terapi</a>
-                <a href="priser-booking.html" class="nav-item nav-link">Priser & Booking</a>
-                <a href="om-mig.html" class="nav-item nav-link">Om mig</a>
+                <a href="index.php" class="nav-item nav-link">Forside</a>
+                <a href="kranio-sakral-terapi.php" class="nav-item nav-link active">Kranio Sakral Terapi</a>
+                <a href="priser-booking.php" class="nav-item nav-link">Priser & Booking</a>
+                <a href="om-mig.php" class="nav-item nav-link">Om mig</a>
             </div>
-            <a href="priser-booking.html" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">Book tid<i class="fa fa-arrow-right ms-3"></i></a>
+            <a href="priser-booking.php" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">Book tid<i class="fa fa-arrow-right ms-3"></i></a>
         </div>
     </nav>
 
@@ -67,7 +67,7 @@ $_s = dpSEO(
             <div class="col-lg-6 col-12 p-5 wow fadeIn text-center text-lg-start" data-wow-delay="0.1s">
                 <h1 class="display-4 text-white mb-4" data-content="hero_title">Kranio Sakral Terapi</h1>
                 <p class="text-white mb-4" data-content="hero_description">Læs om, hvordan kranio sakral terapi kan støtte din krop – og book en tid i klinikken i Gundsømagle nær Roskilde.</p>
-                <a href="priser-booking.html" class="btn btn-primary rounded-pill py-2 px-4 me-3">Book tid</a>
+                <a href="priser-booking.php" class="btn btn-primary rounded-pill py-2 px-4 me-3">Book tid</a>
             </div>
         </div>
     </div>
@@ -173,7 +173,7 @@ $_s = dpSEO(
                 </div>
 
                 <div class="text-center mt-5">
-                    <a href="priser-booking.html" class="btn btn-primary rounded-pill py-2 px-4">Book tid<i class="fa fa-arrow-right ms-3"></i></a>
+                    <a href="priser-booking.php" class="btn btn-primary rounded-pill py-2 px-4">Book tid<i class="fa fa-arrow-right ms-3"></i></a>
                 </div>
 
             </div>
@@ -181,7 +181,7 @@ $_s = dpSEO(
     </div>
 
     <div class="container-fluid bg-dark text-light footer mt-5 pt-5 wow fadeIn" data-wow-delay="0.1s">
-        <div class="container py-5"><div class="row g-5"><div class="col-lg-3 col-md-6"><h5 class="text-light mb-4">Klinik</h5><p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>Ole Nielsens Vej 7, Gundsømagle, 4000 Roskilde</p><p class="mb-2"><i class="fa fa-phone-alt me-3"></i><a href="tel:+4522901025">22 90 10 25</a></p></div><div class="col-lg-3 col-md-6"><h5 class="text-light mb-4">Sider</h5><a class="btn btn-link" href="index.html">Forside</a><a class="btn btn-link" href="kranio-sakral-terapi.html">Kranio Sakral Terapi</a><a class="btn btn-link" href="priser-booking.html">Priser & Booking</a><a class="btn btn-link" href="om-mig.html">Om mig</a></div><div class="col-lg-3 col-md-6 order-4 order-md-3"><h5 class="text-light mb-4">Juridisk</h5><a class="btn btn-link" href="privatlivspolitik.html">Privatlivspolitik</a><a class="btn btn-link" href="cookiepolitik.html">Cookiepolitik</a></div><div class="col-lg-3 col-md-6 order-3 order-md-4"><h5 class="text-light mb-4">Sociale medier</h5><a class="social-link" href="#" aria-label="Facebook"><img src="billeder/facebook-logo.png" alt="Facebook" class="social-logo"><span>Facebook</span></a><a class="social-link" href="#" aria-label="Instagram"><img src="billeder/instagram-logo.png" alt="Instagram" class="social-logo"><span>Instagram</span></a></div></div></div>
+        <div class="container py-5"><div class="row g-5"><div class="col-lg-3 col-md-6"><h5 class="text-light mb-4">Klinik</h5><p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>Ole Nielsens Vej 7, Gundsømagle, 4000 Roskilde</p><p class="mb-2"><i class="fa fa-phone-alt me-3"></i><a href="tel:+4522901025">22 90 10 25</a></p></div><div class="col-lg-3 col-md-6"><h5 class="text-light mb-4">Sider</h5><a class="btn btn-link" href="index.php">Forside</a><a class="btn btn-link" href="kranio-sakral-terapi.php">Kranio Sakral Terapi</a><a class="btn btn-link" href="priser-booking.php">Priser & Booking</a><a class="btn btn-link" href="om-mig.php">Om mig</a></div><div class="col-lg-3 col-md-6 order-4 order-md-3"><h5 class="text-light mb-4">Juridisk</h5><a class="btn btn-link" href="privatlivspolitik.php">Privatlivspolitik</a><a class="btn btn-link" href="cookiepolitik.php">Cookiepolitik</a></div><div class="col-lg-3 col-md-6 order-3 order-md-4"><h5 class="text-light mb-4">Sociale medier</h5><a class="social-link" href="#" aria-label="Facebook"><img src="billeder/facebook-logo.png" alt="Facebook" class="social-logo"><span>Facebook</span></a><a class="social-link" href="#" aria-label="Instagram"><img src="billeder/instagram-logo.png" alt="Instagram" class="social-logo"><span>Instagram</span></a></div></div></div>
     </div>
     <div class="container-fluid bg-dark text-light border-top border-secondary" style="padding: 6px 0;">
         <div class="container text-center">
