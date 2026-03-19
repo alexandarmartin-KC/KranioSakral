@@ -271,6 +271,48 @@
         counter.className = 'char-counter' + (len > max ? ' over' : len > max * 0.9 ? ' warn' : '');
     }
 
+    function normalizeDbContent(page, content) {
+        if (!content || typeof content !== 'object' || Array.isArray(content)) {
+            return {};
+        }
+
+        const normalized = { ...content };
+
+        const aliasesByPage = {
+            'kranio-sakral-terapi': {
+                cat1_title: 'symptoms_title',
+                hovedpine_heading: 'hovedpine_title',
+                nakke_heading: 'nakke_skuldersmerter_title',
+                nakke_text: 'nakke_skuldersmerter_text',
+                ryg_heading: 'ryg_hoftesmerter_title',
+                ryg_text: 'ryg_hoftesmerter_text',
+                kaebe_heading: 'kaebespaendinger_title',
+                kaebe_text: 'kaebespaendinger_text',
+                cat2_title: 'nervous_title',
+                angst_heading: 'angst_depression_title',
+                angst_text: 'angst_depression_text',
+                cat3_title: 'trauma_title',
+                hjernerystelse_heading: 'hjernerystelse_title',
+                piskesmaeld_heading: 'piskesmaeld_title',
+                migraene_heading: 'migraene_title',
+                supplement_text: 'supplementary_text'
+            }
+        };
+
+        const aliases = aliasesByPage[page] || {};
+        Object.entries(aliases).forEach(function ([oldKey, newKey]) {
+            if (
+                normalized[newKey] === undefined &&
+                typeof normalized[oldKey] === 'string' &&
+                normalized[oldKey].trim() !== ''
+            ) {
+                normalized[newKey] = normalized[oldKey];
+            }
+        });
+
+        return normalized;
+    }
+
     async function loadFallbackContent(page) {
         const fallback = {};
 
@@ -370,10 +412,9 @@
             dbContent = await api('/content.php?page=' + encodeURIComponent(page));
         } catch { /* tom – brug blanke felter */ }
 
-        let fallbackContent = {};
-        if (!dbContent || Object.keys(dbContent).length === 0) {
-            fallbackContent = await loadFallbackContent(page);
-        }
+        dbContent = normalizeDbContent(page, dbContent);
+
+        const fallbackContent = await loadFallbackContent(page);
 
         const pageContent = Object.assign({}, fallbackContent, dbContent || {});
 
