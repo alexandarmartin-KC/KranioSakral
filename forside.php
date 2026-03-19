@@ -65,7 +65,7 @@ $_s = dpSEO(
     </div>
 
     <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top p-0 wow fadeIn" data-wow-delay="0.1s">
-        <a href="forside.php" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+        <a href="/" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
             <h1 class="m-0 text-primary">Kranio Sakral Terapi v/Dorthe Pia</h1>
         </a>
         <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -73,12 +73,12 @@ $_s = dpSEO(
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="forside.php" class="nav-item nav-link active">Forside</a>
-                <a href="kranio-sakral-terapi.php" class="nav-item nav-link">Kranio Sakral Terapi</a>
-                <a href="priser-booking.php" class="nav-item nav-link">Priser & Booking</a>
-                <a href="om-mig.php" class="nav-item nav-link">Om mig</a>
+                <a href="/" class="nav-item nav-link active">Forside</a>
+                <a href="/kranio-sakral-terapi" class="nav-item nav-link">Kranio Sakral Terapi</a>
+                <a href="/priser-booking" class="nav-item nav-link">Priser & Booking</a>
+                <a href="/om-mig" class="nav-item nav-link">Om mig</a>
             </div>
-            <a href="priser-booking.php" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">Book tid<i class="fa fa-arrow-right ms-3"></i></a>
+            <a href="/priser-booking" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">Book tid<i class="fa fa-arrow-right ms-3"></i></a>
         </div>
     </nav>
 
@@ -87,7 +87,7 @@ $_s = dpSEO(
             <div class="col-lg-6 col-12 p-5 wow fadeIn text-center text-lg-start" data-wow-delay="0.1s">
                 <h1 class="display-4 text-white mb-4" data-content="hero_title">Kranio Sakral Terapi i Gundsømagle nær Roskilde</h1>
                 <p class="text-white mb-4" data-content="hero_description">Rolig og professionel behandling med fokus på nærvær, tryghed og individuel tilpasning.</p>
-                <a href="priser-booking.php" class="btn btn-primary rounded-pill py-2 px-4 me-3">Book tid</a>
+                <a href="/priser-booking" class="btn btn-primary rounded-pill py-2 px-4 me-3">Book tid</a>
             </div>
         </div>
     </div>
@@ -116,8 +116,8 @@ $_s = dpSEO(
                         <p class="mb-0" data-content="approach_text">I klinikken bliver du mødt i et roligt tempo med plads til spørgsmål og forventningsafstemning. Behandlingen starter typisk med en kort samtale, så vi kan tage udgangspunkt i det, du kommer med. Jeg lægger vægt på tryghed, nærvær og respekt for kroppens grænser. Behandlingen tilpasses dig – og der er fokus på at skabe et roligt rum, hvor du kan give slip på spændinger og finde mere balance i kroppen, i det omfang det giver mening for dig.</p>
 
                         <div class="d-flex flex-wrap gap-3 mt-4">
-                            <a href="priser-booking.php" class="btn btn-primary rounded-pill py-2 px-4">Book tid</a>
-                            <a href="kranio-sakral-terapi.php" class="btn btn-outline-primary rounded-pill py-2 px-4">Læs mere</a>
+                            <a href="/priser-booking" class="btn btn-primary rounded-pill py-2 px-4">Book tid</a>
+                            <a href="/kranio-sakral-terapi" class="btn btn-outline-primary rounded-pill py-2 px-4">Læs mere</a>
                         </div>
                     </div>
                 </div>
@@ -135,35 +135,35 @@ $_s = dpSEO(
                     <div class="help-group-card h-100">
                         <h4 class="help-group-title">Spændinger &amp; smerter</h4>
                         <ul class="help-group-list">
-                            <li><a href="kranio-sakral-terapi.php#hovedpine">Hovedpine</a></li>
-                            <li><a href="kranio-sakral-terapi.php#nakke-skuldersmerter">Nakke- &amp; skuldersmerter</a></li>
-                            <li><a href="kranio-sakral-terapi.php#ryg-hoftesmerter">Ryg- &amp; hoftesmerter</a></li>
-                            <li><a href="kranio-sakral-terapi.php#kaebespaendinger">Kæbespændinger</a></li>
+                            <li><a href="/kranio-sakral-terapi#hovedpine">Hovedpine</a></li>
+                            <li><a href="/kranio-sakral-terapi#nakke-skuldersmerter">Nakke- &amp; skuldersmerter</a></li>
+                            <li><a href="/kranio-sakral-terapi#ryg-hoftesmerter">Ryg- &amp; hoftesmerter</a></li>
+                            <li><a href="/kranio-sakral-terapi#kaebespaendinger">Kæbespændinger</a></li>
                         </ul>
-                        <a class="btn btn-primary rounded-pill py-2 px-4 mt-3" href="kranio-sakral-terapi.php#spaendinger-smerter">Læs mere</a>
+                        <a class="btn btn-primary rounded-pill py-2 px-4 mt-3" href="/kranio-sakral-terapi#spaendinger-smerter">Læs mere</a>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="help-group-card h-100">
                         <h4 class="help-group-title">Nervesystem &amp; regulering</h4>
                         <ul class="help-group-list">
-                            <li><a href="kranio-sakral-terapi.php#stress">Stress</a></li>
-                            <li><a href="kranio-sakral-terapi.php#angst-depression">Angst &amp; depression</a></li>
-                            <li><a href="kranio-sakral-terapi.php#svimmelhed">Svimmelhed</a></li>
-                            <li><a href="kranio-sakral-terapi.php#tinnitus">Tinnitus</a></li>
+                            <li><a href="/kranio-sakral-terapi#stress">Stress</a></li>
+                            <li><a href="/kranio-sakral-terapi#angst-depression">Angst &amp; depression</a></li>
+                            <li><a href="/kranio-sakral-terapi#svimmelhed">Svimmelhed</a></li>
+                            <li><a href="/kranio-sakral-terapi#tinnitus">Tinnitus</a></li>
                         </ul>
-                        <a class="btn btn-primary rounded-pill py-2 px-4 mt-3" href="kranio-sakral-terapi.php#nervesystem-regulering">Læs mere</a>
+                        <a class="btn btn-primary rounded-pill py-2 px-4 mt-3" href="/kranio-sakral-terapi#nervesystem-regulering">Læs mere</a>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="help-group-card h-100">
                         <h4 class="help-group-title">Efter traume</h4>
                         <ul class="help-group-list">
-                            <li><a href="kranio-sakral-terapi.php#hjernerystelse">Hjernerystelse</a></li>
-                            <li><a href="kranio-sakral-terapi.php#piskesmaeld">Piskesmæld</a></li>
-                            <li><a href="kranio-sakral-terapi.php#migraene">Migræne</a></li>
+                            <li><a href="/kranio-sakral-terapi#hjernerystelse">Hjernerystelse</a></li>
+                            <li><a href="/kranio-sakral-terapi#piskesmaeld">Piskesmæld</a></li>
+                            <li><a href="/kranio-sakral-terapi#migraene">Migræne</a></li>
                         </ul>
-                        <a class="btn btn-primary rounded-pill py-2 px-4 mt-3" href="kranio-sakral-terapi.php#efter-belastning-livsfaser">Læs mere</a>
+                        <a class="btn btn-primary rounded-pill py-2 px-4 mt-3" href="/kranio-sakral-terapi#efter-belastning-livsfaser">Læs mere</a>
                     </div>
                 </div>
             </div>
@@ -218,15 +218,15 @@ $_s = dpSEO(
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <h5 class="text-light mb-4">Sider</h5>
-                    <a class="btn btn-link" href="forside.php">Forside</a>
-                    <a class="btn btn-link" href="kranio-sakral-terapi.php">Kranio Sakral Terapi</a>
-                    <a class="btn btn-link" href="priser-booking.php">Priser & Booking</a>
-                    <a class="btn btn-link" href="om-mig.php">Om mig</a>
+                    <a class="btn btn-link" href="/">Forside</a>
+                    <a class="btn btn-link" href="/kranio-sakral-terapi">Kranio Sakral Terapi</a>
+                    <a class="btn btn-link" href="/priser-booking">Priser & Booking</a>
+                    <a class="btn btn-link" href="/om-mig">Om mig</a>
                 </div>
                 <div class="col-lg-3 col-md-6 order-4 order-md-3">
                     <h5 class="text-light mb-4">Juridisk</h5>
-                    <a class="btn btn-link" href="privatlivspolitik.php">Privatlivspolitik</a>
-                    <a class="btn btn-link" href="cookiepolitik.php">Cookiepolitik</a>
+                    <a class="btn btn-link" href="/privatlivspolitik">Privatlivspolitik</a>
+                    <a class="btn btn-link" href="/cookiepolitik">Cookiepolitik</a>
                 </div>
                 <div class="col-lg-3 col-md-6 order-3 order-md-4">
                     <h5 class="text-light mb-4">Sociale medier</h5>
