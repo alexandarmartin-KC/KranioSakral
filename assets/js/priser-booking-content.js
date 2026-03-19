@@ -90,19 +90,50 @@
     setContact(content);
   }
 
+  function mergeNonEmptyContent(base, override) {
+    const merged = Object.assign({}, base || {});
+
+    Object.keys(override || {}).forEach(function (key) {
+      const value = override[key];
+      if (typeof value !== 'string') {
+        return;
+      }
+      if (value.trim() === '') {
+        return;
+      }
+      merged[key] = value;
+    });
+
+    return merged;
+  }
+
   async function loadContent() {
-    // Prøv API først, fald tilbage til statisk JSON
+    // Hent altid defaults først, og læg kun ikke-tomme API-værdier ovenpå.
+    let defaults = {};
+    try {
+      const defaultRes = await fetch(defaultPath, { cache: 'no-store' });
+      if (defaultRes.ok) {
+        defaults = await defaultRes.json();
+      }
+    } catch {
+      defaults = {};
+    }
+
     try {
       const apiRes = await fetch('/api/content.php?page=priser-booking', { cache: 'no-store' });
       if (apiRes.ok) {
         const data = await apiRes.json();
-        if (data && Object.keys(data).length > 0) return data;
+        if (data && typeof data === 'object') {
+          return mergeNonEmptyContent(defaults, data);
+        }
       }
     } catch { /* fald igennem */ }
 
-    const response = await fetch(defaultPath, { cache: 'no-store' });
-    if (!response.ok) throw new Error('Kunne ikke hente indhold.');
-    return response.json();
+    if (defaults && Object.keys(defaults).length > 0) {
+      return defaults;
+    }
+
+    throw new Error('Kunne ikke hente indhold.');
   }
 
   async function init() {
