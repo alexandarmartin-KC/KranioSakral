@@ -335,6 +335,22 @@
                 const value = (el.textContent || '').trim();
                 if (value !== '') fallback[key] = value;
             });
+
+            doc.querySelectorAll('[data-content-html]').forEach(function (el) {
+                const key = el.getAttribute('data-content-html');
+                if (!key) return;
+                const paragraphs = [];
+                el.querySelectorAll('p').forEach(function (p) {
+                    const text = (p.textContent || '').trim();
+                    if (text) paragraphs.push(text);
+                });
+
+                let value = paragraphs.join('\n\n');
+                if (!value) {
+                    value = (el.textContent || '').trim();
+                }
+                if (value !== '') fallback[key] = value;
+            });
         } catch {
             /* ignorér fallback-fejl */
         }
