@@ -51,6 +51,28 @@
         .save-msg.err { color: #c0392b; }
 
         .loading { text-align: center; padding: 3rem; color: #999; }
+
+        /* ── SEO-sektion ── */
+        .seo-section { border: 2px solid #dbeeff; background: #f6faff; }
+        .seo-section h2 { color: #1a5fa8; }
+        .seo-intro { font-size: .82rem; color: #555; margin-bottom: 1.2rem; line-height: 1.55; padding: .6rem .8rem; background: #eaf3ff; border-radius: 6px; }
+
+        /* Tegntæller */
+        .char-counter { font-size: .75rem; color: #aaa; text-align: right; margin-top: .25rem; }
+        .char-counter.warn { color: #e67e22; font-weight: 600; }
+        .char-counter.over { color: #c0392b; font-weight: 700; }
+
+        /* Billed-upload */
+        .img-preview-wrap { margin-bottom: .8rem; position: relative; display: inline-block; }
+        .img-preview { width: 300px; height: 158px; object-fit: cover; border-radius: 6px; border: 1px solid #ddd; display: block; }
+        .remove-img-btn { position: absolute; top: .3rem; right: .3rem; background: rgba(0,0,0,.55); color: #fff; border: none; border-radius: 4px; padding: .15rem .5rem; font-size: .75rem; cursor: pointer; }
+        .remove-img-btn:hover { background: rgba(0,0,0,.8); }
+        .upload-controls { display: flex; align-items: center; flex-wrap: wrap; gap: .6rem; margin-bottom: .4rem; }
+        .upload-btn { padding: .45rem 1.1rem; background: #f0f0f0; border: 1px solid #ccc; border-radius: 6px; cursor: pointer; font-size: .9rem; }
+        .upload-btn:hover { background: #e0e0e0; }
+        .upload-status { font-size: .85rem; }
+        .upload-status.ok  { color: #27ae60; }
+        .upload-status.err { color: #c0392b; }
     </style>
 </head>
 <body>
@@ -195,6 +217,60 @@
         loadPageContent(page);
     });
 
+    /* ── Hjælpefunktioner til felter ── */
+    function buildField(sec, val, page) {
+        let h = '<div class="field-group">';
+        h += '<label for="field-' + sec.key + '">' + escapeHtml(sec.label) + '</label>';
+
+        if (sec.type === 'image') {
+            h += buildImageField(sec.key, val, page || '');
+        } else if (sec.type === 'textarea') {
+            const maxAttr = sec.max ? ' data-maxlength="' + sec.max + '"' : '';
+            h += '<textarea id="field-' + sec.key + '" data-key="' + sec.key + '"' + maxAttr + '>' + escapeHtml(val) + '</textarea>';
+            if (sec.max) {
+                h += '<div class="char-counter" id="counter-' + sec.key + '"></div>';
+            } else {
+                h += '<div class="hint">Tom linje = nyt afsnit</div>';
+            }
+        } else {
+            const maxAttr = sec.max ? ' data-maxlength="' + sec.max + '"' : '';
+            h += '<input id="field-' + sec.key + '" data-key="' + sec.key + '" type="text" value="' + escapeHtml(val) + '"' + maxAttr + '>';
+            if (sec.max) {
+                h += '<div class="char-counter" id="counter-' + sec.key + '"></div>';
+            }
+        }
+
+        h += '</div>';
+        return h;
+    }
+
+    function buildImageField(key, val, page) {
+        const hasImage = val && val !== '';
+        let h = '';
+        h += '<input type="hidden" id="field-' + key + '" data-key="' + key + '" value="' + escapeHtml(val) + '">';
+        h += '<div class="img-preview-wrap" id="preview-wrap-' + key + '"' + (hasImage ? '' : ' style="display:none"') + '>';
+        h += '<img id="preview-img-' + key + '" class="img-preview" src="' + escapeHtml(val) + '" alt="Forhåndsvisning">';
+        h += '<button type="button" class="remove-img-btn" data-key="' + key + '">Fjern</button>';
+        h += '</div>';
+        h += '<div class="upload-controls">';
+        h += '<input type="file" id="og-file-' + key + '" accept="image/jpeg,image/png,image/webp" style="display:none" data-img-key="' + key + '" data-page="' + escapeHtml(page) + '">';
+        h += '<button type="button" class="upload-btn" onclick="document.getElementById(\'og-file-' + key + '\').click()">' + (hasImage ? 'Skift billede \u2026' : 'V\u00e6lg billede \u2026') + '</button>';
+        h += '<span class="upload-status" id="upload-status-' + key + '"></span>';
+        h += '</div>';
+        h += '<div class="hint">Anbefalet: 1200 \u00d7 630 px &nbsp;\u00b7&nbsp; Maks 5 MB &nbsp;\u00b7&nbsp; JPG, PNG eller WebP</div>';
+        return h;
+    }
+
+    function updateCounter(el) {
+        const max     = parseInt(el.dataset.maxlength, 10);
+        const key     = el.dataset.key;
+        const counter = document.getElementById('counter-' + key);
+        if (!counter) return;
+        const len = el.value.length;
+        counter.textContent = len + ' / ' + max + ' tegn';
+        counter.className = 'char-counter' + (len > max ? ' over' : len > max * 0.9 ? ' warn' : '');
+    }
+
     /* ── Load content for page ── */
     async function loadPageContent(page) {
         const area = document.getElementById('editorArea');
@@ -210,25 +286,31 @@
         const def = sectionDefs[page];
         if (!def) return;
 
+        // ── Indholdssektion ──
         let html = '<div class="editor-section"><h2>' + escapeHtml(def.label) + '</h2>';
-
         for (const sec of def.sections) {
-            const val = dbContent[sec.key] || '';
-            html += '<div class="field-group">';
-            html += '<label for="field-' + sec.key + '">' + escapeHtml(sec.label) + '</label>';
+            html += buildField(sec, dbContent[sec.key] || '');
+        }
+        html += '</div>';
 
-            if (sec.type === 'textarea') {
-                html += '<textarea id="field-' + sec.key + '" data-key="' + sec.key + '">' + escapeHtml(val) + '</textarea>';
-                html += '<div class="hint">Tom linje = nyt afsnit</div>';
-            } else {
-                html += '<input id="field-' + sec.key + '" data-key="' + sec.key + '" type="text" value="' + escapeHtml(val) + '">';
+        // ── SEO & Deling ──
+        if (def.seo && def.seo.length > 0) {
+            html += '<div class="editor-section seo-section"><h2>SEO &amp; Deling</h2>';
+            html += '<p class="seo-intro">Styrer sidens titel og beskrivelse i Google-søgeresultater, samt billede og tekst ved deling på Facebook og Instagram.</p>';
+            for (const sec of def.seo) {
+                html += buildField(sec, dbContent[sec.key] || '', page);
             }
-
             html += '</div>';
         }
 
-        html += '</div>';
         area.innerHTML = html;
+
+        // Aktiver tegntællere
+        area.querySelectorAll('[data-maxlength]').forEach(function (el) {
+            updateCounter(el);
+            el.addEventListener('input', function () { updateCounter(el); });
+        });
+
         document.getElementById('saveBar').style.display = 'flex';
     }
 
@@ -262,6 +344,55 @@
         }
 
         btn.disabled = false;
+    });
+
+    /* ── Billed-upload (event delegation) ── */
+    document.getElementById('editorArea').addEventListener('change', async function (e) {
+        const fileInput = e.target.closest('input[type="file"][data-img-key]');
+        if (!fileInput) return;
+
+        const key    = fileInput.dataset.imgKey;
+        const page   = fileInput.dataset.page;
+        const status = document.getElementById('upload-status-' + key);
+        const file   = fileInput.files[0];
+        if (!file) return;
+
+        status.textContent = 'Uploader …';
+        status.className   = 'upload-status';
+
+        const formData = new FormData();
+        formData.append('image', file);
+        formData.append('page', page);
+
+        try {
+            const res  = await fetch(API + '/upload.php', {
+                method: 'POST',
+                credentials: 'same-origin',
+                body: formData,
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.error || 'Upload fejlede');
+
+            document.getElementById('field-' + key).value        = data.path;
+            document.getElementById('preview-img-' + key).src    = data.path + '?t=' + Date.now();
+            document.getElementById('preview-wrap-' + key).style.display = '';
+
+            status.textContent = '✓ Uploadet!';
+            status.className   = 'upload-status ok';
+            setTimeout(function () { status.textContent = ''; }, 4000);
+        } catch (err) {
+            status.textContent = 'Fejl: ' + err.message;
+            status.className   = 'upload-status err';
+        }
+    });
+
+    document.getElementById('editorArea').addEventListener('click', function (e) {
+        const btn = e.target.closest('.remove-img-btn[data-key]');
+        if (!btn) return;
+        const key = btn.dataset.key;
+        document.getElementById('field-' + key).value                    = '';
+        document.getElementById('preview-img-' + key).src                = '';
+        document.getElementById('preview-wrap-' + key).style.display     = 'none';
     });
 
     /* ── Init ── */

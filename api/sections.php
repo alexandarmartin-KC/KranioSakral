@@ -19,6 +19,11 @@ function getSectionDefinitions() {
                 ['key' => 'approach_text',    'label' => 'Tekst: Tilgang',                       'type' => 'textarea'],
                 ['key' => 'help_title',       'label' => 'Overskrift: Områder',                  'type' => 'text'],
             ],
+            'seo' => [
+                ['key' => 'seo_title',       'label' => 'Sidetitel til Google (maks 60 tegn)',        'type' => 'text',     'max' => 60],
+                ['key' => 'seo_description', 'label' => 'Meta-beskrivelse til Google (maks 155 tegn)', 'type' => 'textarea', 'max' => 155],
+                ['key' => 'og_image',        'label' => 'Delingsbillede til Facebook og Instagram',    'type' => 'image'],
+            ],
         ],
         'kranio-sakral-terapi' => [
             'label' => 'Kranio Sakral Terapi',
@@ -29,6 +34,11 @@ function getSectionDefinitions() {
                 ['key' => 'intro_text',         'label' => 'Intro-tekst',             'type' => 'textarea'],
                 ['key' => 'disclaimer_heading', 'label' => 'Afgrænsning: overskrift', 'type' => 'text'],
                 ['key' => 'disclaimer_text',    'label' => 'Afgrænsning: tekst',      'type' => 'textarea'],
+            ],
+            'seo' => [
+                ['key' => 'seo_title',       'label' => 'Sidetitel til Google (maks 60 tegn)',        'type' => 'text',     'max' => 60],
+                ['key' => 'seo_description', 'label' => 'Meta-beskrivelse til Google (maks 155 tegn)', 'type' => 'textarea', 'max' => 155],
+                ['key' => 'og_image',        'label' => 'Delingsbillede til Facebook og Instagram',    'type' => 'image'],
             ],
         ],
         'priser-booking' => [
@@ -71,6 +81,11 @@ function getSectionDefinitions() {
                 ['key' => 'signoff',         'label' => 'Underskrift',               'type' => 'text'],
                 ['key' => 'name',            'label' => 'Navn',                      'type' => 'text'],
             ],
+            'seo' => [
+                ['key' => 'seo_title',       'label' => 'Sidetitel til Google (maks 60 tegn)',        'type' => 'text',     'max' => 60],
+                ['key' => 'seo_description', 'label' => 'Meta-beskrivelse til Google (maks 155 tegn)', 'type' => 'textarea', 'max' => 155],
+                ['key' => 'og_image',        'label' => 'Delingsbillede til Facebook og Instagram',    'type' => 'image'],
+            ],
         ],
         'om-mig' => [
             'label' => 'Om mig',
@@ -85,6 +100,11 @@ function getSectionDefinitions() {
                 ['key' => 'treatments_text',  'label' => 'Tekst: Mine behandlinger',     'type' => 'textarea'],
                 ['key' => 'clinic_title',     'label' => 'Overskrift: Klinikken',        'type' => 'text'],
                 ['key' => 'clinic_text',      'label' => 'Tekst: Klinikken',             'type' => 'textarea'],
+            ],
+            'seo' => [
+                ['key' => 'seo_title',       'label' => 'Sidetitel til Google (maks 60 tegn)',        'type' => 'text',     'max' => 60],
+                ['key' => 'seo_description', 'label' => 'Meta-beskrivelse til Google (maks 155 tegn)', 'type' => 'textarea', 'max' => 155],
+                ['key' => 'og_image',        'label' => 'Delingsbillede til Facebook og Instagram',    'type' => 'image'],
             ],
         ],
     ];
